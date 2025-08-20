@@ -3,7 +3,11 @@ const app = express();
 const path = require("path");
 
 app.set("view engine", "ejs");
-app.set("views", path.resolve("./views"));
+app.set("views", "views");
+
+app.get("/", (req, res) => {
+  return res.render("home");
+});
 
 const PORT = 8000;
 app.listen(PORT, () => {
