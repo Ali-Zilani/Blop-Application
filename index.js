@@ -8,6 +8,7 @@ const BlogRoute = require("./routes/blog.js");
 const {
   checkForAuthenticationCookie,
 } = require("./middlewares/authentication.js");
+const Blog = require("./models/blog.js");
 
 connectToMongoDB();
 
@@ -18,8 +19,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(checkForAuthenticationCookie("token"));
 
-app.get("/", (req, res) => {
-  return res.render("home", { user: req.user });
+app.get("/", async (req, res) => {
+  //console.log(req.user);
+  let allBlogs = { message: "No Blogs bcz user didn't singin" };
+  const userId = req.user?._id || null;
+  if (userId)
+    allBlogs = await Blog.find({ createdBy: userId }).sort({
+      createdAt: -1,
+    });
+  return res.render("home", { user: req.user, blogs: allBlogs });
 });
 
 app.use("/user", UserRoute);
