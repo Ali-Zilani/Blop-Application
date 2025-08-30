@@ -34,9 +34,9 @@ router.post("/", upload.single("coverImage"), async (req, res) => {
     title,
     content,
     createdBy: req.user._id,
-    coverImage: `/uploads/${req.user._id}/${req.file.filename}`,
+    coverImageURL: `/uploads/${req.user._id}/${req.file.filename}`,
   });
-  res.redirect(`/`);
+  res.redirect(`/blog/${blog._id}`);
 });
 
 module.exports = router;

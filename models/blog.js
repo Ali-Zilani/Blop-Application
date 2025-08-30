@@ -12,7 +12,7 @@ const blogSchema = new Schema(
     },
     coverImageURL: {
       type: String,
-      required: false,
+      required: true,
     },
     createdBy: {
       type: Schema.Types.ObjectId,
