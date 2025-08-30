@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const User = require("../models/User.js");
+const User = require("../models/user.js");
 const router = Router();
 
 router.get("/signin", (req, res) => {
@@ -24,7 +24,7 @@ router.post("/signup", async (req, res) => {
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
   const user = User.matchPassword(email, password);
-  return res.redirect('/');
+  return res.redirect("/");
 });
 
 module.exports = router;

@@ -56,7 +56,7 @@ userSchema.static("matchPassword", async function (email, password) {
     .digest("hex");
   if (hashedPassword !== userProvidedHash)
     throw new Error("Incorrect Password");
-  return { ...user, password: undefined, salt: undefined }; // Return user without password and salt
+  return user;
 });
 
 const User = model("user", userSchema);
