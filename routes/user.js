@@ -22,11 +22,16 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/signin", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.matchPasswordAndGenerateToken(email, password);
-  const token = user.token;
-  //console.log(token);
-  return res.cookie("token", token).redirect("/");
+  try {
+    const { email, password } = req.body;
+    const user = await User.matchPasswordAndGenerateToken(email, password);
+    const token = user.token;
+    //console.log(token);
+    return res.cookie("token", token).redirect("/");
+  } catch (err) {
+    //console.log(err.message);
+    return res.render("signin", { error: err.message });
+  }
 });
 
 module.exports = router;
