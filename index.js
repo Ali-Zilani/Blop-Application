@@ -22,12 +22,9 @@ app.use(express.static(path.resolve("./public")));
 
 app.get("/", async (req, res) => {
   //console.log(req.user);
-  let allBlogs = { message: "No Blogs bcz user didn't singin" };
-  const userId = req.user?._id || null;
-  if (userId)
-    allBlogs = await Blog.find({ createdBy: userId }).sort({
-      createdAt: -1,
-    });
+  const allBlogs = await Blog.find({}).sort({
+    createdAt: -1,
+  });
   return res.render("home", { user: req.user, blogs: allBlogs });
 });
 

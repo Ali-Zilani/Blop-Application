@@ -30,7 +30,7 @@ router.post("/", upload.single("coverImage"), async (req, res) => {
   // console.log("File:", req.file);
   // console.log("Body:", req.body);
   const { title, content } = req.body;
-  await Blog.create({
+  const blog = await Blog.create({
     title,
     content,
     createdBy: req.user._id,
