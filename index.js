@@ -4,6 +4,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const connectToMongoDB = require("./MongoDBConnection.js");
 const UserRoute = require("./routes/user.js");
+const BlogRoute = require("./routes/blog.js");
 const {
   checkForAuthenticationCookie,
 } = require("./middlewares/authentication.js");
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", UserRoute);
+app.use("/blog", BlogRoute);
 
 const PORT = 8000;
 app.listen(PORT, () => {
