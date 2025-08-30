@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+
+    <title>User Profile</title>
+
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <style>
+      .profile-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 3rem 0;
+      }
+      .profile-image {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border: 5px solid white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+      .stats-card {
+        transition: transform 0.3s ease;
+      }
+      .stats-card:hover {
+        transform: translateY(-5px);
+      }
+      .profile-info {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-top: -50px;
+        position: relative;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <%- include('./partials/nav') %>
+    <!-- Profile Header -->
+    <section class="profile-header">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8 text-center">
+            <div class="mb-4">
+              <img
+                src="<%= user.profileImageURL %>"
+                alt="Profile Picture"
+                class="rounded-circle profile-image"
+              />
+            </div>
+            <h1 class="display-4 fw-bold mb-2"><%= user.name %></h1>
+            <p class="lead mb-0">
+              <i class="bi bi-envelope me-2"></i><%= user.email %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile Information -->
+    <section class="py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="profile-info p-4">
+              <!-- User Stats -->
+              <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                  <div class="card stats-card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                      <div class="display-4 text-primary mb-2">
+                        <i class="bi bi-person-circle"></i>
+                      </div>
+                      <h5 class="card-title text-muted mb-1">Profile</h5>
+                      <p class="card-text fw-bold">Active User</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card stats-card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                      <div class="display-4 text-success mb-2">
+                        <i class="bi bi-journal-text"></i>
+                      </div>
+                      <h5 class="card-title text-muted mb-1">Total Blogs</h5>
+                      <p class="card-text fw-bold fs-4"><%= 0 %></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card stats-card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                      <div class="display-4 text-warning mb-2">
+                        <i class="bi bi-calendar-check"></i>
+                      </div>
+                      <h5 class="card-title text-muted mb-1">Member Since</h5>
+                      <p class="card-text fw-bold">
+                        <%= user.createdAt ? new
+                        Date(user.createdAt).getFullYear() : 'Recently' %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Profile Details Card -->
+              <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                  <h4 class="mb-0">
+                    <i class="bi bi-person-badge me-2"></i>Profile Information
+                  </h4>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label fw-bold text-muted">
+                          <i class="bi bi-person me-1"></i>Full Name
+                        </label>
+                        <p class="fs-5"><%= user.name %></p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label fw-bold text-muted">
+                          <i class="bi bi-envelope me-1"></i>Email Address
+                        </label>
+                        <p class="fs-5"><%= user.email %></p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label fw-bold text-muted">
+                          <i class="bi bi-journal-text me-1"></i>Blog Posts
+                        </label>
+                        <p class="fs-5">
+                          <span class="badge bg-success fs-6"
+                            ><%= user.totalBlogs || 0 %> Posts</span
+                          >
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label fw-bold text-muted">
+                          <i class="bi bi-calendar-event me-1"></i>Join Date
+                        </label>
+                        <p class="fs-5">
+                          <%= user.createdAt ? new
+                          Date(user.createdAt).toLocaleDateString('en-US', {
+                          year: 'numeric', month: 'long', day: 'numeric' }) :
+                          'Not available' %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Action Buttons -->
+                  <div class="d-flex gap-2 mt-4">
+                    <a href="/edit-profile" class="btn btn-primary">
+                      <i class="bi bi-pencil-square me-1"></i>Edit Profile
+                    </a>
+                    <a href="/my-blogs" class="btn btn-outline-primary">
+                      <i class="bi bi-journal-text me-1"></i>View My Blogs
+                    </a>
+                    <a href="/create-blog" class="btn btn-success">
+                      <i class="bi bi-plus-circle me-1"></i>Create New Blog
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <%- include('./partials/scripts') %>
+  </body>
+</html>
