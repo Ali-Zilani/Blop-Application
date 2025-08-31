@@ -5,7 +5,6 @@
 
     <title>User Profile</title>
 
-    <!-- Bootstrap Icons -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
       rel="stylesheet"
@@ -41,7 +40,7 @@
   </head>
   <body class="bg-light">
     <%- include('./partials/nav') %>
-    <!-- Profile Header -->
+
     <section class="profile-header">
       <div class="container">
         <div class="row justify-content-center">
@@ -62,13 +61,11 @@
       </div>
     </section>
 
-    <!-- Profile Information -->
     <section class="py-5">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-8">
             <div class="profile-info p-4">
-              <!-- User Stats -->
               <div class="row g-4 mb-4">
                 <div class="col-md-4">
                   <div class="card stats-card h-100 border-0 shadow-sm">
@@ -88,7 +85,7 @@
                         <i class="bi bi-journal-text"></i>
                       </div>
                       <h5 class="card-title text-muted mb-1">Total Blogs</h5>
-                      <p class="card-text fw-bold fs-4"><%= 0 %></p>
+                      <p class="card-text fw-bold fs-4"><%= blogs.length %></p>
                     </div>
                   </div>
                 </div>
@@ -108,7 +105,6 @@
                 </div>
               </div>
 
-              <!-- Profile Details Card -->
               <div class="card border-0 shadow-sm">
                 <div class="card-header bg-primary text-white">
                   <h4 class="mb-0">
@@ -142,28 +138,14 @@
                           <i class="bi bi-journal-text me-1"></i>Blog Posts
                         </label>
                         <p class="fs-5">
-                          <span class="badge bg-success fs-6"
-                            ><%= user.totalBlogs || 0 %> Posts</span
-                          >
-                        </p>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label class="form-label fw-bold text-muted">
-                          <i class="bi bi-calendar-event me-1"></i>Join Date
-                        </label>
-                        <p class="fs-5">
-                          <%= user.createdAt ? new
-                          Date(user.createdAt).toLocaleDateString('en-US', {
-                          year: 'numeric', month: 'long', day: 'numeric' }) :
-                          'Not available' %>
+                          <span class="badge bg-success fs-6">
+                            <%= blogs.length %> Posts
+                          </span>
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <!-- Action Buttons -->
                   <div class="d-flex gap-2 mt-4">
                     <a href="/edit-profile" class="btn btn-primary">
                       <i class="bi bi-pencil-square me-1"></i>Edit Profile
@@ -171,7 +153,7 @@
                     <a href="/my-blogs" class="btn btn-outline-primary">
                       <i class="bi bi-journal-text me-1"></i>View My Blogs
                     </a>
-                    <a href="/create-blog" class="btn btn-success">
+                    <a href="/blog/add-new" class="btn btn-success">
                       <i class="bi bi-plus-circle me-1"></i>Create New Blog
                     </a>
                   </div>

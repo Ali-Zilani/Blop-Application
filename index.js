@@ -37,6 +37,13 @@ app.get("/profile", async (req, res) => {
   res.render("profile", { user: req.user, blogs: allblogs });
 });
 
+app.get("/my-blogs", async (req, res) => {
+  const userId = req.user?._id || null;
+  const allblogs = await Blog.find({ createdBy: userId }).sort({
+    createdAt: -1,
+  });
+  res.render("my-blogs", { user: req.user, blogs: allblogs });
+});
 app.use("/user", UserRoute);
 app.use("/blog", BlogRoute);
 
