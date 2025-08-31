@@ -44,6 +44,7 @@ app.get("/my-blogs", async (req, res) => {
   });
   res.render("my-blogs", { user: req.user, blogs: allblogs });
 });
+
 app.use("/user", UserRoute);
 app.use("/blog", BlogRoute);
 
