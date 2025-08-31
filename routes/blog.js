@@ -4,6 +4,7 @@ const path = require("path");
 const fs = require("fs");
 
 const Blog = require("../models/blog.js");
+const Comment = require("../models/comment.js");
 //uploading file using multer
 const multer = require("multer");
 const storage = multer.diskStorage({
@@ -42,7 +43,21 @@ router.post("/", upload.single("coverImage"), async (req, res) => {
 router.get("/:id", async (req, res) => {
   const blogId = req.params.id;
   const blog = await Blog.findById(blogId).populate("createdBy");
+  const comments = await Comment.find({ blogId: req.params.id }).populate(
+    "commentedBy"
+  );
   //console.log(blog.createdBy);
-  res.render("blog", { user: req.user, blog });
+  res.render("blog", { user: req.user, blog, comments });
 });
+
+//Handling comment routes
+router.post("/comment/:blogId", async (req, res) => {
+  await Comment.create({
+    content: req.body.content,
+    blogId: req.params.blogId,
+    commentedBy: req.user._id,
+  });
+  res.redirect(`/blog/${req.params.blogId}`);
+});
+
 module.exports = router;
