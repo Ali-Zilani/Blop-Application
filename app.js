@@ -9,7 +9,8 @@ const {
   checkForAuthenticationCookie,
 } = require("./middlewares/authentication.js");
 const Blog = require("./models/blog.js");
-
+const dotenv = require("dotenv");
+dotenv.config({ quiet: true });
 connectToMongoDB();
 
 app.set("view engine", "ejs");
@@ -48,7 +49,7 @@ app.get("/my-blogs", async (req, res) => {
 app.use("/user", UserRoute);
 app.use("/blog", BlogRoute);
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
